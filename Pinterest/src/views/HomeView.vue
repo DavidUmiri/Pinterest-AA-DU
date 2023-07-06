@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 let arrayImagenes = ref([])
 let buscar = ref()
@@ -16,17 +16,22 @@ async function getImages(query) {
 }
 
 function createImages(imagesList) {
-  for (let i = 0; i < imagesList.length; i++) {
+  if(arrayImagenes.value !==""){
+    arrayImagenes.value = [];
+    for (let i = 0; i < imagesList.length; i++) {
     const image = { nombre: null }
     image.nombre = imagesList[i].urls.thumb
     arrayImagenes.value.push(image)
   }
 }
+  }
+
 
 </script>
 
 <template>
   <main>
+    <p>Numero de imagenes {{ arrayImagenes.length }}</p>
     <input type="text" v-model="buscar" @keyup="getImages(buscar)" />
     <div v-for="(imagen, id) in arrayImagenes" :key="id" class="col-12 col-md-6 col-lg-4">
         <img :src="imagen.nombre" width="300" height="300" alt="Imagen del artista" />
